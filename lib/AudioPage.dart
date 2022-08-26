@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:marquee/marquee.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:songapp/Widget/BlackBox.dart';
 import 'package:songapp/Widget/Box3d.dart';
 
 class AudioPage extends StatefulWidget {
@@ -70,15 +72,34 @@ class _AudioPageState extends State<AudioPage> {
             ),
             const SizedBox(height: 25,),
 
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-              child: Box3d(
-                child: Image.asset(
-                  'assets/Jana-Gana-Mana.jpg',
-                  fit: BoxFit.cover,
+          Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+
+          Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+            child:Box3d(
+              child: Image.asset(
+                'assets/Jana-Gana-Mana.jpg',
+                fit: BoxFit.cover,
+              ),
+            ),),
+                  SizedBox(
+                    height: 10,
+                  ),
+
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                child:  Column(
+                  children: [
+                    Text('Song Name',style: TextStyle(fontSize: 20),),
+                    Text('Song Name',style: TextStyle(fontSize: 20),),
+                  ],
                 ),
               ),
-            ),
+                ],
+              ),
 
             const SizedBox(height: 20,),
 
@@ -166,7 +187,7 @@ class _AudioPageState extends State<AudioPage> {
               ],
             ),
 
-            const SizedBox(height: 25,),
+            const SizedBox(height: 20,),
 
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -180,8 +201,9 @@ class _AudioPageState extends State<AudioPage> {
               ),
             ),
 
-            const SizedBox(height: 20,),
+            const SizedBox(height: 25,),
 
+            Expanded(child:
             Padding(padding: const EdgeInsets.symmetric(horizontal: 20),
               child: SizedBox(
                 height: 70,
@@ -191,11 +213,15 @@ class _AudioPageState extends State<AudioPage> {
                       child: GestureDetector(
                         onTap: (){},
                         child: const SizedBox(
-                          height: 80,
+                          height: 90,
                           width: 70,
-                          child: Box3d(
-                            child: Icon(Icons.skip_previous,size: 28,),
-                          ),
+                          child:Box3d(child: SizedBox(
+                            height: 40,
+                            width: 70,
+                            child:  BlackBox(
+                              child: Icon(Icons.skip_previous,size: 28,color: Colors.white,),
+                            ),
+                          ),),
                         ),
                       ),),
                     Expanded(
@@ -210,10 +236,16 @@ class _AudioPageState extends State<AudioPage> {
                           });
                         },
                         child: SizedBox(
-                          height: 80,
+                          height: 90,
                           width: 70,
                           child: Box3d(
-                            child:isPause ? const Icon(Icons.play_arrow,size: 28,color: Colors.red):const Icon(Icons.pause,size: 30,color: Colors.blue),
+                            child: SizedBox(
+                              height: 50,
+                              width: 120,
+                              child: BlackBox(
+                                child:isPause ? const Icon(Icons.play_arrow,size: 28,color: Colors.red):const Icon(Icons.pause,size: 30,color: Colors.white),
+                              ),
+                            ),
                           ),
                         ),
                       ),flex: 2,),
@@ -221,11 +253,15 @@ class _AudioPageState extends State<AudioPage> {
                       child: GestureDetector(
                         onTap: (){},
                         child: const SizedBox(
-                          height: 80,
+                          height: 90,
                           width: 70,
-                          child: Box3d(
-                            child: Icon(Icons.skip_next,size: 28,),
-                          ),
+                          child:Box3d(child: SizedBox(
+                            height: 40,
+                            width: 70,
+                            child:  BlackBox(
+                              child: Icon(Icons.skip_next,size: 28,color: Colors.white,),
+                            ),
+                          ),),
                         ),
                       ),
                     ),
@@ -233,6 +269,8 @@ class _AudioPageState extends State<AudioPage> {
                 ),
               ),
             ),
+            ),
+            SizedBox(height: 10,),
           ],
         ),
       ),
