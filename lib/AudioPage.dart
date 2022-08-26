@@ -213,15 +213,11 @@ class _AudioPageState extends State<AudioPage> {
                       child: GestureDetector(
                         onTap: (){},
                         child: const SizedBox(
-                          height: 90,
+                          height: 60,
                           width: 70,
-                          child:Box3d(child: SizedBox(
-                            height: 40,
-                            width: 70,
-                            child:  BlackBox(
-                              child: Icon(Icons.skip_previous,size: 28,color: Colors.white,),
-                            ),
-                          ),),
+                          child:  BlackBox(
+                            child: Icon(Icons.skip_previous,size: 28,color: Colors.white,),
+                          ),
                         ),
                       ),),
                     Expanded(
@@ -236,32 +232,22 @@ class _AudioPageState extends State<AudioPage> {
                           });
                         },
                         child: SizedBox(
-                          height: 90,
-                          width: 70,
-                          child: Box3d(
-                            child: SizedBox(
-                              height: 50,
-                              width: 120,
-                              child: BlackBox(
-                                child:isPause ? const Icon(Icons.play_arrow,size: 28,color: Colors.red):const Icon(Icons.pause,size: 30,color: Colors.white),
-                              ),
-                            ),
+                          height: 70,
+                          width: 90,
+                          child: BlackBox(
+                            child:isPause ? const Icon(Icons.play_arrow,size: 28,color: Colors.red):const Icon(Icons.pause,size: 30,color: Colors.white),
                           ),
                         ),
                       ),flex: 2,),
                     Expanded(
                       child: GestureDetector(
                         onTap: (){},
-                        child: const SizedBox(
-                          height: 90,
+                        child: const  SizedBox(
+                          height: 60,
                           width: 70,
-                          child:Box3d(child: SizedBox(
-                            height: 40,
-                            width: 70,
-                            child:  BlackBox(
-                              child: Icon(Icons.skip_next,size: 28,color: Colors.white,),
-                            ),
-                          ),),
+                          child:  BlackBox(
+                            child: Icon(Icons.skip_next,size: 28,color: Colors.white,),
+                          ),
                         ),
                       ),
                     ),

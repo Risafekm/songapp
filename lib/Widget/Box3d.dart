@@ -12,6 +12,7 @@ class Box3d extends StatelessWidget {
         child:  child,
       ),
       decoration: BoxDecoration(
+        //  color: Colors.grey[300],
           color: Colors.grey[300],
           borderRadius:BorderRadius.circular(12),
           boxShadow: [
