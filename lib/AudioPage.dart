@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:marquee/marquee.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:songapp/ListSongs.dart';
 import 'package:songapp/Widget/BlackBox.dart';
 import 'package:songapp/Widget/Box3d.dart';
 
@@ -28,7 +29,7 @@ class _AudioPageState extends State<AudioPage> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -78,30 +79,39 @@ class _AudioPageState extends State<AudioPage> {
             children: [
 
           Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-            child:Box3d(
-              child: Image.asset(
-                'assets/Jana-Gana-Mana.jpg',
-                fit: BoxFit.cover,
-              ),
-            ),),
-                  SizedBox(
-                    height: 10,
+          padding: const EdgeInsets.symmetric(horizontal: 55, vertical: 10),
+            child:BlackBox(
+              child: Container(
+                height: 300,
+                width: 300,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(60),
+                  image: const DecorationImage(
+                    image: AssetImage( 'assets/Jana-Gana-Mana.jpg',),
                   ),
+                ),
+              ),
+            ),
+          ),
+
+                  const SizedBox(height: 10,),
 
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 5),
                 child:  Column(
-                  children: [
-                    Text('Song Name',style: TextStyle(fontSize: 20),),
-                    Text('Song Name',style: TextStyle(fontSize: 20),),
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children:  const [
+                    Text('Aalum thee naalam',style: TextStyle(fontSize: 20,letterSpacing: 2,fontStyle: FontStyle.italic),),
+                    SizedBox(height: 4,),
+                    Text('akhil j chand | jana gana mana |',style: TextStyle(fontSize: 18,color: Colors.black54,letterSpacing: 1,fontStyle: FontStyle.italic),),
                   ],
                 ),
               ),
                 ],
               ),
 
-            const SizedBox(height: 20,),
+            const SizedBox(height: 25,),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -146,15 +156,17 @@ class _AudioPageState extends State<AudioPage> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    setState(() {
-                      if(isPlaylist == false){
-                        isPlaylist = true;
-                      }else{
-                        isPlaylist=false;
-                      }
-                    });
+
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const SongList()));
+                    // setState(() {
+                    //   if(isPlaylist == false){
+                    //     isPlaylist = true;
+                    //   }else{
+                    //     isPlaylist=false;
+                    //   }
+                    // });
                   },
-                  child: const SizedBox(
+                  child:  const SizedBox(
                     height: 60,
                     width: 60,
                     child: Box3d(
@@ -187,7 +199,7 @@ class _AudioPageState extends State<AudioPage> {
               ],
             ),
 
-            const SizedBox(height: 20,),
+            const SizedBox(height: 50,),
 
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -197,11 +209,11 @@ class _AudioPageState extends State<AudioPage> {
                 lineHeight: 10,
                 percent: 0.6,
                 progressColor: Colors.green,
-                backgroundColor: Colors.transparent,
+               // backgroundColor: Colors.transparent,
               ),
             ),
 
-            const SizedBox(height: 25,),
+            // const SizedBox(height: 25,),
 
             Expanded(child:
             Padding(padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -256,7 +268,6 @@ class _AudioPageState extends State<AudioPage> {
               ),
             ),
             ),
-            SizedBox(height: 10,),
           ],
         ),
       ),
