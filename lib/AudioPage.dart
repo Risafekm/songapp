@@ -34,7 +34,9 @@ class _AudioPageState extends State<AudioPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GestureDetector(
-                    onTap: (){},
+                    onTap: (){
+                      Navigator.of(context).pop();
+                    },
                     child: const SizedBox(
                       height: 70,
                       width: 70,
@@ -82,7 +84,7 @@ class _AudioPageState extends State<AudioPage> {
           padding: const EdgeInsets.symmetric(horizontal: 55, vertical: 10),
             child:BlackBox(
               child: Container(
-                height: 300,
+                height: 280,
                 width: 300,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(60),
@@ -103,7 +105,7 @@ class _AudioPageState extends State<AudioPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children:  const [
                     Text('Aalum thee naalam',style: TextStyle(fontSize: 20,letterSpacing: 2,fontStyle: FontStyle.italic),),
-                    SizedBox(height: 4,),
+                    SizedBox(height: 5,),
                     Text('akhil j chand | jana gana mana |',style: TextStyle(fontSize: 18,color: Colors.black54,letterSpacing: 1,fontStyle: FontStyle.italic),),
                   ],
                 ),
@@ -156,8 +158,6 @@ class _AudioPageState extends State<AudioPage> {
                 ),
                 GestureDetector(
                   onTap: () {
-
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const SongList()));
                     // setState(() {
                     //   if(isPlaylist == false){
                     //     isPlaylist = true;
@@ -228,7 +228,7 @@ class _AudioPageState extends State<AudioPage> {
                           height: 60,
                           width: 70,
                           child:  BlackBox(
-                            child: Icon(Icons.skip_previous,size: 28,color: Colors.white,),
+                            child: Icon(Icons.skip_previous,size: 28,color: Colors.black,),
                           ),
                         ),
                       ),),
@@ -247,7 +247,7 @@ class _AudioPageState extends State<AudioPage> {
                           height: 70,
                           width: 90,
                           child: BlackBox(
-                            child:isPause ? const Icon(Icons.play_arrow,size: 28,color: Colors.red):const Icon(Icons.pause,size: 30,color: Colors.white),
+                            child:isPause ? const Icon(Icons.play_arrow,size: 28,color: Colors.red):const Icon(Icons.pause,size: 30,color: Colors.black),
                           ),
                         ),
                       ),flex: 2,),
@@ -258,7 +258,7 @@ class _AudioPageState extends State<AudioPage> {
                           height: 60,
                           width: 70,
                           child:  BlackBox(
-                            child: Icon(Icons.skip_next,size: 28,color: Colors.white,),
+                            child: Icon(Icons.skip_next,size: 28,color: Colors.black,),
                           ),
                         ),
                       ),

@@ -19,12 +19,12 @@ class Box3d extends StatelessWidget {
             BoxShadow(
               color: Colors.grey.shade500,
               offset: const Offset(5,5),
-              blurRadius: 8,
+              blurRadius: 4,
             ),
             const BoxShadow(
               color: Colors.white,
               offset: Offset(-5,-5),
-              blurRadius: 8,
+              blurRadius: 4,
             ),
           ]
       ),

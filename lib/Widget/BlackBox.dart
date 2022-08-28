@@ -12,7 +12,7 @@ class BlackBox extends StatelessWidget {
         child:  child,
       ),
       decoration: BoxDecoration(
-          color: Colors.black38,
+          color: Colors.grey[300],
           borderRadius:BorderRadius.circular(60),
           boxShadow: [
             BoxShadow(
