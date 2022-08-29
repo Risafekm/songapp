@@ -1,8 +1,7 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:marquee/marquee.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:songapp/ListSongs.dart';
 import 'package:songapp/Widget/BlackBox.dart';
 import 'package:songapp/Widget/Box3d.dart';
 
@@ -20,6 +19,41 @@ class _AudioPageState extends State<AudioPage> {
   bool isShuffle = false;
   bool isRepeat = false;
   bool isPause = false;
+
+  late AudioPlayer _player;
+  late AudioCache cache;
+
+  Duration position = new Duration();
+  Duration musiclength = new Duration();
+  
+  Widget slider(){
+    return Slider.adaptive(
+      activeColor: Colors.blue[800],
+        inactiveColor: Colors.grey[350],
+        value: position.inSeconds.toDouble(),
+        max:musiclength.inSeconds.toDouble(),
+        onChanged: (value){
+        seekToSec(value.toInt());
+        });
+  }
+
+  void seekToSec(int sec){
+    Duration newPos = Duration(seconds:sec );
+    _player.seek(newPos);
+  }
+
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   _player = AudioPlayer();
+  //  _player.durationHandle = (d){
+  //    setState(() {
+  //      musiclength = d;
+  //    });
+  //  }
+  // }
+
 
   @override
   Widget build(BuildContext context) {
@@ -201,17 +235,19 @@ class _AudioPageState extends State<AudioPage> {
 
             const SizedBox(height: 50,),
 
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: LinearPercentIndicator(
-                leading: const Text('0.00'),
-                trailing: const Text('4.30'),
-                lineHeight: 10,
-                percent: 0.6,
-                progressColor: Colors.green,
-               // backgroundColor: Colors.transparent,
-              ),
-            ),
+
+            slider(),
+            // Container(
+            //   padding: const EdgeInsets.symmetric(horizontal: 10),
+            //   child: LinearPercentIndicator(
+            //     leading: const Text('0.00'),
+            //     trailing: const Text('4.30'),
+            //     lineHeight: 10,
+            //     percent: 0.6,
+            //     progressColor: Colors.green,
+            //    // backgroundColor: Colors.transparent,
+            //   ),
+            // ),
 
             // const SizedBox(height: 25,),
 
