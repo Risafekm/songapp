@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:songapp/AddSongBottomSheet.dart';
+import 'package:songapp/Widget/AddSongBottomSheet.dart';
 import 'package:songapp/AudioPage.dart';
 import 'package:songapp/Widget/BlackBox.dart';
 import 'package:songapp/Widget/Box3d.dart';
+import 'package:songapp/Widget/Search.dart';
 
 class SongList extends StatefulWidget {
   const SongList({Key? key}) : super(key: key);
@@ -53,7 +54,7 @@ class _SongListState extends State<SongList> {
           Padding(padding: const EdgeInsets.only(right: 5,bottom: 3,top: 3),
             child: GestureDetector(
               onTap: () {
-
+               showSearch(context: context, delegate:Search());
               },
               child: const SizedBox(
                 height: 60,
