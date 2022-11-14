@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 
 class AddSongFiled extends StatelessWidget {
@@ -6,8 +7,11 @@ class AddSongFiled extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
-    final _usernameController = TextEditingController();
-    final _passwordController = TextEditingController();
+    final _songnameController = TextEditingController();
+    final _artistController = TextEditingController();
+
+
+
 
     return  Container(
       height: 600,
@@ -24,11 +28,56 @@ class AddSongFiled extends StatelessWidget {
 
                 const SizedBox(height: 20,),
 
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      height: 50,
+                      width: 150,
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      child: ElevatedButton(
+                        onPressed: (){
+
+                        },
+                        child:const Text('Select Image'),
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                          elevation: MaterialStateProperty.all(0),
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(height: 20,),
+
+                    Container(
+                      height: 50,
+                      width: 150,
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      child: ElevatedButton(
+                        onPressed: (){
+
+                        },
+                        child:const Text('Select Song'),
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                          elevation: MaterialStateProperty.all(0),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+
                 Padding(padding: const EdgeInsets.only(left: 20,right: 20,top: 20),
                   child:  TextFormField(
-                    controller: _usernameController,
+                    controller: _songnameController,
                     validator: (value){
-                      if(value!.isEmpty){
+                      if(value!= null && value.isEmpty){
                         return "Song cannot be empty";
                       }else{
                         return null;
@@ -44,19 +93,19 @@ class AddSongFiled extends StatelessWidget {
                 ),
                 const SizedBox(height: 20,),
 
-                Padding(padding: const EdgeInsets.only(left: 20,right: 20,top: 10),
+                Padding(padding: const EdgeInsets.only(left: 20,right: 20),
                   child:  TextFormField(
-                    controller: _passwordController,
+                    controller: _artistController,
                     validator: (value){
-                      if(value!.isEmpty){
-                        return "textField cannot be empty";
+                      if(value!= null && value.isEmpty){
+                        return "artistname cannot be empty";
                       }else{
                         return null;
                       }
                     },
                     obscureText: true,
                     decoration: const InputDecoration(
-                      hintText: 'Song Url',
+                      hintText: 'Artist name',
                       hintStyle: TextStyle(fontSize: 18,color: Colors.blue),
                     ),
                   ),
@@ -77,7 +126,9 @@ class AddSongFiled extends StatelessWidget {
                   borderRadius: BorderRadius.circular(25),
                 ),
                 child: ElevatedButton(
-                  onPressed: (){},
+                  onPressed: (){
+                    _formKey.currentState!.validate();
+                  },
                   child:const Text('Save'),
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.transparent),

@@ -1,9 +1,9 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/percent_indicator.dart';
+import 'package:on_audio_query/on_audio_query.dart';
 import 'package:songapp/Widget/BlackBox.dart';
 import 'package:songapp/Widget/Box3d.dart';
+
 
 class AudioPage extends StatefulWidget {
   const AudioPage({Key? key}) : super(key: key);
@@ -20,39 +20,12 @@ class _AudioPageState extends State<AudioPage> {
   bool isRepeat = false;
   bool isPause = false;
 
-  late AudioPlayer _player;
-  late AudioCache cache;
 
   Duration position = new Duration();
   Duration musiclength = new Duration();
-  
-  Widget slider(){
-    return Slider.adaptive(
-      activeColor: Colors.blue[800],
-        inactiveColor: Colors.grey[350],
-        value: position.inSeconds.toDouble(),
-        max:musiclength.inSeconds.toDouble(),
-        onChanged: (value){
-        seekToSec(value.toInt());
-        });
-  }
 
-  void seekToSec(int sec){
-    Duration newPos = Duration(seconds:sec );
-    _player.seek(newPos);
-  }
+  final _audioQuery = OnAudioQuery();
 
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //   _player = AudioPlayer();
-  //  _player.durationHandle = (d){
-  //    setState(() {
-  //      musiclength = d;
-  //    });
-  //  }
-  // }
 
 
   @override
@@ -109,43 +82,43 @@ class _AudioPageState extends State<AudioPage> {
             ),
             const SizedBox(height: 25,),
 
-          Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
 
-          Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 55, vertical: 10),
-            child:BlackBox(
-              child: Container(
-                height: 280,
-                width: 300,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(60),
-                  image: const DecorationImage(
-                    image: AssetImage( 'assets/Jana-Gana-Mana.jpg',),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 55, vertical: 10),
+                  child:BlackBox(
+                    child: Container(
+                      height: 280,
+                      width: 300,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(60),
+                        image: const DecorationImage(
+                          image: AssetImage( 'assets/Jana-Gana-Mana.jpg',),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-          ),
 
-                  const SizedBox(height: 10,),
+                const SizedBox(height: 10,),
 
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 5),
-                child:  Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children:  const [
-                    Text('Aalum thee naalam',style: TextStyle(fontSize: 20,letterSpacing: 2,fontStyle: FontStyle.italic),),
-                    SizedBox(height: 5,),
-                    Text('akhil j chand | jana gana mana |',style: TextStyle(fontSize: 18,color: Colors.black54,letterSpacing: 1,fontStyle: FontStyle.italic),),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 5),
+                  child:  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children:  const [
+                      Text('Aalum thee naalam',style: TextStyle(fontSize: 20,letterSpacing: 2,fontStyle: FontStyle.italic),),
+                      SizedBox(height: 5,),
+                      Text('akhil j chand | jana gana mana |',style: TextStyle(fontSize: 18,color: Colors.black54,letterSpacing: 1,fontStyle: FontStyle.italic),),
+                    ],
+                  ),
                 ),
-              ),
-                ],
-              ),
+              ],
+            ),
 
             const SizedBox(height: 25,),
 
@@ -234,22 +207,6 @@ class _AudioPageState extends State<AudioPage> {
             ),
 
             const SizedBox(height: 50,),
-
-
-            slider(),
-            // Container(
-            //   padding: const EdgeInsets.symmetric(horizontal: 10),
-            //   child: LinearPercentIndicator(
-            //     leading: const Text('0.00'),
-            //     trailing: const Text('4.30'),
-            //     lineHeight: 10,
-            //     percent: 0.6,
-            //     progressColor: Colors.green,
-            //    // backgroundColor: Colors.transparent,
-            //   ),
-            // ),
-
-            // const SizedBox(height: 25,),
 
             Expanded(child:
             Padding(padding: const EdgeInsets.symmetric(horizontal: 20),

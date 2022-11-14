@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "405996762577",
+    "project_id": "songapp-591ab",
+    "storage_bucket": "songapp-591ab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:405996762577:android:4dcb37d17967d2f3029cf0",
+        "android_client_info": {
+          "package_name": "com.android.application"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "405996762577-fcl58e5tbledkv4gd10esusrs139nops.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRx-RqIKn32NHLMjnQPktzOI1Oo4dB7-E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "405996762577-fcl58e5tbledkv4gd10esusrs139nops.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:405996762577:android:ba39750c537a34d2029cf0",
+        "android_client_info": {
+          "package_name": "com.example.songapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "405996762577-fcl58e5tbledkv4gd10esusrs139nops.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRx-RqIKn32NHLMjnQPktzOI1Oo4dB7-E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "405996762577-fcl58e5tbledkv4gd10esusrs139nops.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

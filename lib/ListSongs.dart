@@ -4,6 +4,8 @@ import 'package:songapp/AudioPage.dart';
 import 'package:songapp/Widget/BlackBox.dart';
 import 'package:songapp/Widget/Box3d.dart';
 import 'package:songapp/Widget/Search.dart';
+import 'package:on_audio_query/on_audio_query.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class SongList extends StatefulWidget {
   const SongList({Key? key}) : super(key: key);
@@ -14,6 +16,18 @@ class SongList extends StatefulWidget {
 
 class _SongListState extends State<SongList> {
   bool changeButton = false;
+  final _audioQuery = OnAudioQuery();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    requestPermission();
+  }
+
+  void requestPermission(){
+    Permission.storage.request();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,63 +86,80 @@ class _SongListState extends State<SongList> {
         ],
       ),
 
-      body: SafeArea(
-        child:GestureDetector(
-          onTap: (){
-            Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const AudioPage()));
-          },
-          child:  ListView.separated(
-            itemCount: 40,
-            itemBuilder: (context, index) {
-              return ListTile(
-                leading: SizedBox(
-                  height: 70,
-                  width: 60,
-                  child: Box3d(
-                    child: Container(
-                      height: 60,
+      body: FutureBuilder<List<SongModel>>(
+        future: _audioQuery.querySongs(
+          sortType: null,
+          orderType: OrderType.DESC_OR_GREATER,
+          uriType: UriType.EXTERNAL,
+          ignoreCase: true,
+        ),
+        builder: (context, item){
+          if(item.data == null){
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if(item.data!.isEmpty){
+            return Text("No Songs Found");
+          }
+          return SafeArea(
+            child:GestureDetector(
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const AudioPage()));
+              },
+              child:  ListView.separated(
+                itemCount: item.data!.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    leading: SizedBox(
+                      height: 70,
                       width: 60,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        image: const DecorationImage(
-                          image: AssetImage('assets/Jana-Gana-Mana.jpg'),
+                      child: Box3d(
+                        child: Container(
+                          height: 60,
+                          width: 60,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            image: const DecorationImage(
+                              image: AssetImage('assets/Jana-Gana-Mana.jpg'),
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ),
-                title: Text(
-                  'Name $index',
-                  style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 2),
-                ),
-                subtitle: const Text(
-                  'Artists ',
-                  style: TextStyle(
-                      fontWeight: FontWeight.normal,
-                      fontSize: 14,
-                      letterSpacing: 1),
-                ),
-                trailing:IconButton(
-                  onPressed: (){
-                    print('Clicked Mrevert');
-                  },
-                  icon: const Icon(
-                    Icons.more_vert,
-                    size: 22,
-                  ),
-                ),
-              );
-            },
-            separatorBuilder: (BuildContext context, int index) {
-              return const Divider();
-            },
-          ),
-        ),
+                    title: Text(
+                      item.data![index].displayNameWOExt,
+                      style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 2),
+                    ),
+                    subtitle:  Text(
+                      item.data![index].artist.toString(),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.normal,
+                          fontSize: 14,
+                          letterSpacing: 1),
+                    ),
+                    trailing:IconButton(
+                      onPressed: (){
+                        print('Clicked Mrevert');
+                      },
+                      icon: const Icon(
+                        Icons.more_vert,
+                        size: 22,
+                      ),
+                    ),
+                  );
+                },
+                separatorBuilder: (BuildContext context, int index) {
+                  return const Divider();
+                },
+              ),
+            ),
+          );
+        },
       ),
-
     );
   }
 
