@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:songapp/Widget/AddSongBottomSheet.dart';
 import 'package:songapp/AudioPage.dart';
@@ -36,15 +35,16 @@ class _SongListState extends State<SongList> {
   }
 
   playSong(String ? uri){
-   try{
-     _audioPlayer.setAudioSource(
-       AudioSource.uri(Uri.parse(uri!),),);
+    try{
+      _audioPlayer.setAudioSource(
+        AudioSource.uri(Uri.parse(uri!),),);
       _audioPlayer.play();
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AudioPage()));
-   }on Exception {
-       log('error parsing song');
-   }
+
+    }on Exception {
+      log('error parsing song');
+    }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +58,7 @@ class _SongListState extends State<SongList> {
         backgroundColor: Colors.grey[300],
 
         title: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 5),
+          padding: EdgeInsets.symmetric(horizontal: 8),
           child: Text(
             'P L A Y  L I S T',
             style: TextStyle(
@@ -66,6 +66,8 @@ class _SongListState extends State<SongList> {
             ),
           ),
         ),
+
+        // leading: const Icon(Icons.music_note,size: 26,color: Colors.black,),
 
         leading:GestureDetector(
           onTap: (){
@@ -125,7 +127,8 @@ class _SongListState extends State<SongList> {
                 itemBuilder: (context, index) {
                   return ListTile(
                     onTap: (){
-                      playSong(item.data![index].uri);
+                    //  playSong(item.data![index].uri);
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  AudioPage(songModel: item.data![index],),),);
                     },
                     leading: SizedBox(
                       height: 70,

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:on_audio_query/on_audio_query.dart';
@@ -7,7 +9,9 @@ import 'package:just_audio/just_audio.dart';
 
 
 class AudioPage extends StatefulWidget {
-  const AudioPage({Key? key}) : super(key: key);
+
+  const AudioPage({Key? key,required this.songModel}) : super(key: key);
+   final SongModel songModel;
 
   @override
   _AudioPageState createState() => _AudioPageState();
@@ -19,7 +23,7 @@ class _AudioPageState extends State<AudioPage> {
   bool isPlaylist = false;
   bool isShuffle = false;
   bool isRepeat = false;
-  bool isPause = false;
+  bool isPlaying = false;
 
 
   Duration position = new Duration();
@@ -27,13 +31,25 @@ class _AudioPageState extends State<AudioPage> {
 
   final _audioQuery = OnAudioQuery();
   AudioPlayer _audioPlayer = AudioPlayer();
+  
+  
+  playSong(){
+    try{
+      _audioPlayer.setAudioSource(
+        AudioSource.uri(Uri.parse(widget.songModel.uri!),),);
+        _audioPlayer.play();
+        isPlaying = true;
 
-  playSong1(){
-    _audioPlayer.play();
+    }on Exception {
+      log('error parsing song');
+    }
   }
 
-  pauseSong(){
-    _audioPlayer.pause();
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    playSong();
   }
 
   @override
@@ -118,10 +134,16 @@ class _AudioPageState extends State<AudioPage> {
                   child:  Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children:  const [
-                      Text('Aalum thee naalam',style: TextStyle(fontSize: 20,letterSpacing: 2,fontStyle: FontStyle.italic),),
-                      SizedBox(height: 5,),
-                      Text('akhil j chand | jana gana mana |',style: TextStyle(fontSize: 18,color: Colors.black54,letterSpacing: 1,fontStyle: FontStyle.italic),),
+                    children:   [
+                      Text(widget.songModel.displayNameWOExt,
+                        overflow: TextOverflow.fade,
+                        maxLines: 1,
+                        style: const TextStyle(fontSize: 20,letterSpacing: 2,fontStyle: FontStyle.italic),),
+                      const SizedBox(height: 5,),
+                       Text(widget.songModel.artist.toString(),
+                        overflow: TextOverflow.fade,
+                        maxLines: 1,
+                        style: const TextStyle(fontSize: 18,color: Colors.black54,letterSpacing: 1,fontStyle: FontStyle.italic),),
                     ],
                   ),
                 ),
@@ -136,11 +158,7 @@ class _AudioPageState extends State<AudioPage> {
                 GestureDetector(
                   onTap: () {
                     setState(() {
-                      if(isShuffle == false){
-                        isShuffle = true;
-                      }else{
-                        isShuffle = false;
-                      }
+                      isShuffle =! isShuffle;
                     });
                   },
                   child: SizedBox(
@@ -156,11 +174,7 @@ class _AudioPageState extends State<AudioPage> {
                 GestureDetector(
                   onTap: () {
                     setState(() {
-                      if(isRepeat == false){
-                        isRepeat = true;
-                      }else{
-                        isRepeat = false;
-                      }
+                     isRepeat =!isRepeat;
                     });
                   },
                   child: SizedBox(
@@ -173,13 +187,7 @@ class _AudioPageState extends State<AudioPage> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    // setState(() {
-                    //   if(isPlaylist == false){
-                    //     isPlaylist = true;
-                    //   }else{
-                    //     isPlaylist=false;
-                    //   }
-                    // });
+                  // isPlaylist =!isPlaylist;
                   },
                   child:  const SizedBox(
                     height: 60,
@@ -192,11 +200,7 @@ class _AudioPageState extends State<AudioPage> {
                 GestureDetector(
                   onTap: () {
                     setState(() {
-                      if(isFavarite == false){
-                        isFavarite = true;
-                      }else{
-                        isFavarite=false;
-                      }
+                    isFavarite =! isFavarite;
                     });
                   },
                   child:SizedBox(
@@ -214,7 +218,19 @@ class _AudioPageState extends State<AudioPage> {
               ],
             ),
 
-            const SizedBox(height: 50,),
+            const SizedBox(height: 30,),
+
+           Row(
+             children: [
+              const Padding(padding: EdgeInsets.only(left: 10),
+              child:  Text("0.0"),
+              ),
+               Expanded(child:  Slider(onChanged: (double value) {  }, value: 0,),),
+               const Padding(padding: EdgeInsets.only(right: 10),
+                 child:  Text("0.0"),
+               ),
+             ],
+           ),
 
             Expanded(child:
             Padding(padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -237,26 +253,29 @@ class _AudioPageState extends State<AudioPage> {
                       child: GestureDetector(
                         onTap: (){
                           setState(() {
-                            if(isPause==false){
-
-                              isPause=true;
+                            if(isPlaying){
+                              _audioPlayer.pause();
                             }else{
-
-                              isPause=false;
+                              _audioPlayer.play();
                             }
+                            isPlaying =! isPlaying;
                           });
                         },
                         child: SizedBox(
                           height: 70,
                           width: 90,
                           child: BlackBox(
-                            child:isPause ? const Icon(Icons.play_arrow,size: 28,color: Colors.red):const Icon(Icons.pause,size: 30,color: Colors.black),
+                            child:isPlaying ? const Icon(Icons.pause,size: 28,color: Colors.blue):const Icon(Icons.play_arrow,size: 30,color: Colors.red),
                           ),
                         ),
                       ),flex: 2,),
                     Expanded(
                       child: GestureDetector(
-                        onTap: (){},
+                        onTap: (){
+                          setState(() {
+
+                          });
+                        },
                         child: const  SizedBox(
                           height: 60,
                           width: 70,

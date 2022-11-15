@@ -48,12 +48,15 @@ class Search extends SearchDelegate{
       return SafeArea(
         child:GestureDetector(
           onTap: (){
-            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>  const AudioPage()));
+
           },
-          child:  ListView.separated(
+          child:  ListView.builder(
             itemCount: 40,
             itemBuilder: (context, index) {
               return ListTile(
+                onTap: (){
+               //   Navigator.of(context).push(MaterialPageRoute(builder: (context)=>   AudioPage(songModel:,)));
+                },
                 leading: SizedBox(
                   height: 70,
                   width: 60,
@@ -95,9 +98,9 @@ class Search extends SearchDelegate{
                 ),
               );
             },
-            separatorBuilder: (BuildContext context, int index) {
-              return const Divider();
-            },
+            // separatorBuilder: (BuildContext context, int index) {
+            //   return const Divider();
+            // },
           ),
         ),
       );
