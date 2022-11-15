@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:just_audio_background/just_audio_background.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:songapp/Widget/BlackBox.dart';
 import 'package:songapp/Widget/Box3d.dart';
@@ -36,11 +37,19 @@ class _AudioPageState extends State<AudioPage> {
   playSong(){
     try{
       widget.audioPlayer.setAudioSource(
-        AudioSource.uri(Uri.parse(widget.songModel.uri!),),);
+        AudioSource.uri(Uri.parse(widget.songModel.uri!),
+          tag: MediaItem(
+            id: widget.songModel.id.toString(),
+            album: widget.songModel.album,
+            title: widget.songModel.displayNameWOExt,
+            // artUri: Uri.parse('https://example.com/albumart.jpg'),
+          ),
+        ),
+      );
         widget.audioPlayer.play();
         isPlaying = true;
 
-    }on Exception {
+    } on Exception {
       log('error parsing song');
     }
     widget.audioPlayer.durationStream.listen((d) {
@@ -237,7 +246,7 @@ class _AudioPageState extends State<AudioPage> {
 
            Row(
              children: [
-               Padding(padding: EdgeInsets.only(left: 10),
+               Padding(padding: const EdgeInsets.only(left: 10),
               child:  Text(_position.toString().split(".")[0]),
               ),
                Expanded(child:  Slider(
@@ -252,7 +261,7 @@ class _AudioPageState extends State<AudioPage> {
                  value:_position.inSeconds.toDouble(),
 
                ),),
-                Padding(padding: EdgeInsets.only(right: 10),
+                Padding(padding: const EdgeInsets.only(right: 10),
                  child:  Text(_duration.toString().split(".")[0]),
                ),
              ],

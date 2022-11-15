@@ -34,17 +34,6 @@ class _SongListState extends State<SongList> {
     Permission.storage.request();
   }
 
-  // playSong(String ? uri){
-  //   try{
-  //     _audioPlayer.setAudioSource(
-  //       AudioSource.uri(Uri.parse(uri!),),);
-  //     _audioPlayer.play();
-  //
-  //   }on Exception {
-  //     log('error parsing song');
-  //   }
-  // }
-
 
   @override
   Widget build(BuildContext context) {
@@ -68,14 +57,14 @@ class _SongListState extends State<SongList> {
         ),
 
         leading:GestureDetector(
-          onTap: (){
-            showModalBottomSheet<void>(
-              context: context,
-              builder: (BuildContext context) {
-                return const AddSongFiled();
-              },
-            );
-          },
+          // onTap: (){
+          //   showModalBottomSheet<void>(
+          //     context: context,
+          //     builder: (BuildContext context) {
+          //       return const AddSongFiled();
+          //     },
+          //   );
+          // },
           child:  const BlackBox(child: Icon(Icons.music_note, color: Colors.black,
             size: 26,),),
         ),
@@ -131,20 +120,24 @@ class _SongListState extends State<SongList> {
                     },
                     leading: QueryArtworkWidget(
                       id: item.data![index].id, type:ArtworkType.AUDIO,
-                      nullArtworkWidget:CircleAvatar(
-                        radius:26 ,
-                        child: Text('$index'),
+                      nullArtworkWidget: const CircleAvatar(
+                        radius: 26,
+                        backgroundColor: Colors.grey,
+                        child: Icon(Icons.music_note,size: 26,),
                       ),
                     ),
                     title: Text(
                       item.data![index].displayNameWOExt,
+                      maxLines: 1,
                       style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          letterSpacing: 2),
+                          letterSpacing: 2
+                      ),
                     ),
                     subtitle:  Text(
                       item.data![index].artist.toString(),
+                      maxLines: 1,
                       style: const TextStyle(
                           fontWeight: FontWeight.normal,
                           fontSize: 14,
@@ -170,7 +163,16 @@ class _SongListState extends State<SongList> {
       ),
     );
   }
-
+// playSong(String ? uri){
+//   try{
+//     _audioPlayer.setAudioSource(
+//       AudioSource.uri(Uri.parse(uri!),),);
+//     _audioPlayer.play();
+//
+//   }on Exception {
+//     log('error parsing song');
+//   }
+// }
 }
 
 
