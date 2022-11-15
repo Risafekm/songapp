@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:songapp/Widget/AddSongBottomSheet.dart';
 import 'package:songapp/AudioPage.dart';
@@ -6,6 +8,8 @@ import 'package:songapp/Widget/Box3d.dart';
 import 'package:songapp/Widget/Search.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:just_audio/just_audio.dart';
+
 
 class SongList extends StatefulWidget {
   const SongList({Key? key}) : super(key: key);
@@ -17,6 +21,8 @@ class SongList extends StatefulWidget {
 class _SongListState extends State<SongList> {
   bool changeButton = false;
   final _audioQuery = OnAudioQuery();
+   final AudioPlayer _audioPlayer = AudioPlayer();
+
 
   @override
   void initState() {
@@ -27,6 +33,17 @@ class _SongListState extends State<SongList> {
 
   void requestPermission(){
     Permission.storage.request();
+  }
+
+  playSong(String ? uri){
+   try{
+     _audioPlayer.setAudioSource(
+       AudioSource.uri(Uri.parse(uri!),),);
+      _audioPlayer.play();
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AudioPage()));
+   }on Exception {
+       log('error parsing song');
+   }
   }
 
   @override
@@ -103,14 +120,13 @@ class _SongListState extends State<SongList> {
             return Text("No Songs Found");
           }
           return SafeArea(
-            child:GestureDetector(
-              onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const AudioPage()));
-              },
-              child:  ListView.separated(
+            child: ListView.builder(
                 itemCount: item.data!.length,
                 itemBuilder: (context, index) {
                   return ListTile(
+                    onTap: (){
+                      playSong(item.data![index].uri);
+                    },
                     leading: SizedBox(
                       height: 70,
                       width: 60,
@@ -152,11 +168,10 @@ class _SongListState extends State<SongList> {
                     ),
                   );
                 },
-                separatorBuilder: (BuildContext context, int index) {
-                  return const Divider();
-                },
+                // separatorBuilder: (BuildContext context, int index) {
+                //   return const Divider();
+                // },
               ),
-            ),
           );
         },
       ),

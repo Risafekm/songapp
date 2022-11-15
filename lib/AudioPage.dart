@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:songapp/Widget/BlackBox.dart';
 import 'package:songapp/Widget/Box3d.dart';
+import 'package:just_audio/just_audio.dart';
 
 
 class AudioPage extends StatefulWidget {
@@ -25,8 +26,15 @@ class _AudioPageState extends State<AudioPage> {
   Duration musiclength = new Duration();
 
   final _audioQuery = OnAudioQuery();
+  AudioPlayer _audioPlayer = AudioPlayer();
 
+  playSong1(){
+    _audioPlayer.play();
+  }
 
+  pauseSong(){
+    _audioPlayer.pause();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -230,8 +238,10 @@ class _AudioPageState extends State<AudioPage> {
                         onTap: (){
                           setState(() {
                             if(isPause==false){
+
                               isPause=true;
                             }else{
+
                               isPause=false;
                             }
                           });
