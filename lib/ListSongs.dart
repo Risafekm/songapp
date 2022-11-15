@@ -34,16 +34,16 @@ class _SongListState extends State<SongList> {
     Permission.storage.request();
   }
 
-  playSong(String ? uri){
-    try{
-      _audioPlayer.setAudioSource(
-        AudioSource.uri(Uri.parse(uri!),),);
-      _audioPlayer.play();
-
-    }on Exception {
-      log('error parsing song');
-    }
-  }
+  // playSong(String ? uri){
+  //   try{
+  //     _audioPlayer.setAudioSource(
+  //       AudioSource.uri(Uri.parse(uri!),),);
+  //     _audioPlayer.play();
+  //
+  //   }on Exception {
+  //     log('error parsing song');
+  //   }
+  // }
 
 
   @override
@@ -128,7 +128,8 @@ class _SongListState extends State<SongList> {
                   return ListTile(
                     onTap: (){
                     //  playSong(item.data![index].uri);
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  AudioPage(songModel: item.data![index],),),);
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  AudioPage(songModel: item.data![index],
+                        audioPlayer: _audioPlayer,),),);
                     },
                     leading: SizedBox(
                       height: 70,

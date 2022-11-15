@@ -10,8 +10,9 @@ import 'package:just_audio/just_audio.dart';
 
 class AudioPage extends StatefulWidget {
 
-  const AudioPage({Key? key,required this.songModel}) : super(key: key);
+  const AudioPage({Key? key,required this.songModel,required this.audioPlayer}) : super(key: key);
    final SongModel songModel;
+   final AudioPlayer audioPlayer;
 
   @override
   _AudioPageState createState() => _AudioPageState();
@@ -26,8 +27,8 @@ class _AudioPageState extends State<AudioPage> {
   bool isPlaying = false;
 
 
-  Duration position = new Duration();
-  Duration musiclength = new Duration();
+  Duration _duration = new Duration();
+  Duration _position = new Duration();
 
   final _audioQuery = OnAudioQuery();
   AudioPlayer _audioPlayer = AudioPlayer();
@@ -35,14 +36,29 @@ class _AudioPageState extends State<AudioPage> {
   
   playSong(){
     try{
-      _audioPlayer.setAudioSource(
+      widget.audioPlayer.setAudioSource(
         AudioSource.uri(Uri.parse(widget.songModel.uri!),),);
-        _audioPlayer.play();
+        widget.audioPlayer.play();
         isPlaying = true;
 
     }on Exception {
       log('error parsing song');
     }
+    widget.audioPlayer.durationStream.listen((d) {
+     setState(() {
+       _duration = d!;
+     });
+    });
+    widget.audioPlayer.positionStream.listen((p) {
+     setState(() {
+       _position = p;
+     });
+    });
+  }
+
+  void changeToSec(int seconds){
+   Duration duration =Duration(seconds: seconds);
+   widget.audioPlayer.seek(duration);
   }
 
 @override
@@ -138,12 +154,12 @@ class _AudioPageState extends State<AudioPage> {
                       Text(widget.songModel.displayNameWOExt,
                         overflow: TextOverflow.fade,
                         maxLines: 1,
-                        style: const TextStyle(fontSize: 20,letterSpacing: 2,fontStyle: FontStyle.italic),),
+                        style: const TextStyle(fontSize: 20,letterSpacing: 2,fontStyle: FontStyle.normal),),
                       const SizedBox(height: 5,),
                        Text(widget.songModel.artist.toString(),
                         overflow: TextOverflow.fade,
                         maxLines: 1,
-                        style: const TextStyle(fontSize: 18,color: Colors.black54,letterSpacing: 1,fontStyle: FontStyle.italic),),
+                        style: const TextStyle(fontSize: 18,color: Colors.black54,letterSpacing: 1,fontStyle: FontStyle.normal),),
                     ],
                   ),
                 ),
@@ -222,12 +238,23 @@ class _AudioPageState extends State<AudioPage> {
 
            Row(
              children: [
-              const Padding(padding: EdgeInsets.only(left: 10),
-              child:  Text("0.0"),
+               Padding(padding: EdgeInsets.only(left: 10),
+              child:  Text(_position.toString().split(".")[0]),
               ),
-               Expanded(child:  Slider(onChanged: (double value) {  }, value: 0,),),
-               const Padding(padding: EdgeInsets.only(right: 10),
-                 child:  Text("0.0"),
+               Expanded(child:  Slider(
+                 onChanged: (value) {
+                   setState(() {
+                   changeToSec(value.toInt());
+                   value = value;
+                 });
+               },
+                 min: Duration(microseconds: 0).inSeconds.toDouble(),
+                 max: _duration.inSeconds.toDouble(),
+                 value:_position.inSeconds.toDouble(),
+
+               ),),
+                Padding(padding: EdgeInsets.only(right: 10),
+                 child:  Text(_duration.toString().split(".")[0]),
                ),
              ],
            ),
@@ -254,9 +281,9 @@ class _AudioPageState extends State<AudioPage> {
                         onTap: (){
                           setState(() {
                             if(isPlaying){
-                              _audioPlayer.pause();
+                              widget.audioPlayer.pause();
                             }else{
-                              _audioPlayer.play();
+                              widget.audioPlayer.play();
                             }
                             isPlaying =! isPlaying;
                           });
