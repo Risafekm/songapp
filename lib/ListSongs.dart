@@ -67,8 +67,6 @@ class _SongListState extends State<SongList> {
           ),
         ),
 
-        // leading: const Icon(Icons.music_note,size: 26,color: Colors.black,),
-
         leading:GestureDetector(
           onTap: (){
             showModalBottomSheet<void>(
@@ -131,20 +129,11 @@ class _SongListState extends State<SongList> {
                       Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  AudioPage(songModel: item.data![index],
                         audioPlayer: _audioPlayer,),),);
                     },
-                    leading: SizedBox(
-                      height: 70,
-                      width: 60,
-                      child: Box3d(
-                        child: Container(
-                          height: 60,
-                          width: 60,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            image: const DecorationImage(
-                              image: AssetImage('assets/Jana-Gana-Mana.jpg'),
-                            ),
-                          ),
-                        ),
+                    leading: QueryArtworkWidget(
+                      id: item.data![index].id, type:ArtworkType.AUDIO,
+                      nullArtworkWidget:CircleAvatar(
+                        radius:26 ,
+                        child: Text('$index'),
                       ),
                     ),
                     title: Text(

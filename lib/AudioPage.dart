@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:on_audio_query/on_audio_query.dart';
@@ -248,7 +247,7 @@ class _AudioPageState extends State<AudioPage> {
                    value = value;
                  });
                },
-                 min: Duration(microseconds: 0).inSeconds.toDouble(),
+                 min: const Duration(microseconds: 0).inSeconds.toDouble(),
                  max: _duration.inSeconds.toDouble(),
                  value:_position.inSeconds.toDouble(),
 
