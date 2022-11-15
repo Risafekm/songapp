@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:songapp/Widget/AddSongBottomSheet.dart';
 import 'package:songapp/AudioPage.dart';
 import 'package:songapp/Widget/BlackBox.dart';
@@ -8,6 +9,7 @@ import 'package:songapp/Widget/Search.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:songapp/provider/Song_Model_Provider.dart';
 
 
 class SongList extends StatefulWidget {
@@ -66,7 +68,7 @@ class _SongListState extends State<SongList> {
           //   );
           // },
           child:  const BlackBox(child: Icon(Icons.music_note, color: Colors.black,
-            size: 26,),),
+            size: 25,),),
         ),
 
         actions: [
@@ -77,13 +79,13 @@ class _SongListState extends State<SongList> {
                showSearch(context: context, delegate:Search());
               },
               child: const SizedBox(
-                height: 60,
-                width: 70,
+                height: 40,
+                width: 60,
                 child: Box3d(
                   child: Icon(
                     Icons.search_outlined,
                     color: Colors.black,
-                    size: 26,
+                    size: 32,
                   ),
                 ),
               ),
@@ -114,8 +116,11 @@ class _SongListState extends State<SongList> {
                 itemBuilder: (context, index) {
                   return ListTile(
                     onTap: (){
-                    //  playSong(item.data![index].uri);
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  AudioPage(songModel: item.data![index],
+                      context
+                          .read<SongModelProvider>()
+                          .setId(item.data![index].id);
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  AudioPage(
+                        songModel: item.data![index],
                         audioPlayer: _audioPlayer,),),);
                     },
                     leading: QueryArtworkWidget(

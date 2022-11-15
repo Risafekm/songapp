@@ -1,7 +1,9 @@
+
 import 'package:flutter/material.dart';
 import 'package:just_audio_background/just_audio_background.dart';
-import 'package:songapp/AudioPage.dart';
+import 'package:provider/provider.dart';
 import 'package:songapp/ListSongs.dart';
+import 'package:songapp/provider/Song_Model_Provider.dart';
 
 
 Future<void> main() async {
@@ -10,7 +12,9 @@ Future<void> main() async {
     androidNotificationChannelName: 'Audio playback',
     androidNotificationOngoing: true,
   );
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(create: (context) =>SongModelProvider(),
+  child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {

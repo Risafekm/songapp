@@ -3,9 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:on_audio_query/on_audio_query.dart';
+import 'package:provider/provider.dart';
 import 'package:songapp/Widget/BlackBox.dart';
 import 'package:songapp/Widget/Box3d.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:songapp/provider/Song_Model_Provider.dart';
 
 
 class AudioPage extends StatefulWidget {
@@ -135,23 +137,18 @@ class _AudioPageState extends State<AudioPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
 
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 55, vertical: 10),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 55, vertical: 10),
                   child:BlackBox(
-                    child: Container(
+                    child: SizedBox(
                       height: 280,
-                      width: 300,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(60),
-                        image: const DecorationImage(
-                          image: AssetImage( 'assets/Jana-Gana-Mana.jpg',),
-                        ),
-                      ),
+                     width: 300,
+                     child: ArtWorkWidget(),
                     ),
                   ),
                 ),
 
-                const SizedBox(height: 10,),
+                const SizedBox(height: 5,),
 
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 5),
@@ -174,7 +171,7 @@ class _AudioPageState extends State<AudioPage> {
               ],
             ),
 
-            const SizedBox(height: 25,),
+            const SizedBox(height: 20,),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -242,7 +239,7 @@ class _AudioPageState extends State<AudioPage> {
               ],
             ),
 
-            const SizedBox(height: 30,),
+            const SizedBox(height: 20,),
 
            Row(
              children: [
@@ -327,6 +324,29 @@ class _AudioPageState extends State<AudioPage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ArtWorkWidget extends StatelessWidget {
+  const ArtWorkWidget({
+    Key? key,
+  }) : super(key: key);
+
+
+  @override
+  Widget build(BuildContext context) {
+    return QueryArtworkWidget(
+      // artworkHeight: 280,
+      //   artworkWidth: 300,
+      //   size: 200,
+      id:context.watch<SongModelProvider>().id,
+      type:ArtworkType.AUDIO,
+      nullArtworkWidget: const CircleAvatar(
+        radius: 26,
+        backgroundColor: Colors.white24,
+        child: Icon(Icons.music_note,size: 150,),
       ),
     );
   }
